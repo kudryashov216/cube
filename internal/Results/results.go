@@ -6,11 +6,11 @@ import (
 	"strconv"
 )
 
-func Output(result *uint8, writer *bufio.Writer) {
+func Output(enteredNumber *byte, result *uint8, writer *bufio.Writer) {
 
 	paint.DrawDice(result, writer)
 
-	if string(rune(*result)) == strconv.Itoa(int(*result)) {
+	if string(rune(*enteredNumber)) == strconv.Itoa(int(*result)) {
 		writer.Write([]byte("You win!\n"))
 		writer.Flush()
 		writer.Reset(writer)

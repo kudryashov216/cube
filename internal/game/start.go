@@ -34,6 +34,6 @@ func StartGame(wg *sync.WaitGroup,
 
 	randomNumber := uint8(number.GetRandomNumber(randomaizer))
 
-	results.Output(&randomNumber, writer)
+	results.Output(enteredNumber, &randomNumber, writer)
 
 }
