@@ -11,9 +11,20 @@ import (
 
 func main() {
 
-	var gameToStart bool
-	var eneterednumber byte
-	var wg sync.WaitGroup
+	var (
+		gameToStart    bool
+		decline        bool
+		eneterednumber byte
+		scoreCounter   int64 = 100
+		countThrows    uint8
+		wg             sync.WaitGroup
+	)
+
+	const (
+		NUMBER_THROWS_EASY   uint8 = 6
+		NUMBER_THROWS_MIDDLE uint8 = 3
+		NUMBER_THROWS_HIGH   uint8 = 1
+	)
 
 	randSource := rand.NewSource(time.Now().Unix())
 	randomaizer := rand.New(randSource)
@@ -37,8 +48,9 @@ func main() {
 				writer.Flush()
 				writer.Reset(writer)
 				time.Sleep(time.Second * 1)
-				exitInGame()
+				game.ExitInGame()
 			case 'y':
+				writer.Write([]byte("You have \"100\" points."))
 				writer.Write([]byte("\nGame beginning!\n"))
 				writer.Flush()
 				writer.Reset(writer)
@@ -47,19 +59,28 @@ func main() {
 				writer.Write([]byte("\nYou put incorrect response\n"))
 				writer.Flush()
 				writer.Reset(writer)
-				exitInGame()
+				game.ExitInGame()
 			}
+
+			result := game.DifficultyChoice(writer, reader)
+
+			switch result {
+			case 0:
+				countThrows = NUMBER_THROWS_EASY
+			case 1:
+				countThrows = NUMBER_THROWS_MIDDLE
+			case 2:
+				countThrows = NUMBER_THROWS_HIGH
+			}
+
+			writer.Write([]byte("settings succed!"))
+			writer.Flush()
+			writer.Reset(writer)
 
 		}
 
-		game.StartGame(&wg, &eneterednumber, randomaizer, writer, reader)
+		game.StartGame(&wg, &eneterednumber, randomaizer, writer, reader, &scoreCounter, &decline, &countThrows)
 
 	}
-
-}
-
-func exitInGame() {
-
-	os.Exit(0)
 
 }

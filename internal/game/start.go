@@ -9,7 +9,14 @@ import (
 	"sync"
 )
 
-func StartGame(wg *sync.WaitGroup, enteredNumber *byte, randomaizer *rand.Rand, writer *bufio.Writer, reader *bufio.Reader) {
+func StartGame(wg *sync.WaitGroup,
+	enteredNumber *byte,
+	randomaizer *rand.Rand,
+	writer *bufio.Writer,
+	reader *bufio.Reader,
+	scoreCounter *int64,
+	decline *bool,
+	countThorws *uint8) {
 
 	wg.Add(1)
 	go number.InputNewNumber(enteredNumber, reader, writer, wg)
