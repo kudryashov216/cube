@@ -5,7 +5,6 @@ import (
 	results "cube/internal/Results"
 	"cube/internal/initialization"
 	"cube/internal/number"
-	"cube/internal/paint"
 	"math/rand"
 	"strconv"
 	"sync"
@@ -36,7 +35,5 @@ func StartGame(wg *sync.WaitGroup,
 	randomNumber := uint8(number.GetRandomNumber(randomaizer))
 
 	results.Output(&randomNumber, writer)
-
-	paint.DrawDice(&randomNumber, writer)
 
 }
