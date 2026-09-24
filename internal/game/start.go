@@ -2,6 +2,7 @@ package game
 
 import (
 	"bufio"
+	results "cube/internal/Results"
 	"cube/internal/initialization"
 	"cube/internal/number"
 	"cube/internal/paint"
@@ -34,21 +35,8 @@ func StartGame(wg *sync.WaitGroup,
 
 	randomNumber := uint8(number.GetRandomNumber(randomaizer))
 
+	results.Output(&randomNumber, writer)
+
 	paint.DrawDice(&randomNumber, writer)
-
-	if string(rune(*enteredNumber)) == strconv.Itoa(int(randomNumber)) {
-		writer.Write([]byte("You win!\n"))
-		writer.Flush()
-		writer.Reset(writer)
-		return
-	}
-
-	writer.Write([]byte("You lost!\n"))
-	writer.Flush()
-	writer.Reset(writer)
-
-	writer.Write([]byte("The correct number: " + strconv.Itoa(int(randomNumber)) + "\n"))
-	writer.Flush()
-	writer.Reset(writer)
 
 }
