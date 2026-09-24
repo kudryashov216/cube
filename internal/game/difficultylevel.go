@@ -5,7 +5,9 @@ import (
 	"strconv"
 )
 
-func DifficultyChoice(writer *bufio.Writer, reader *bufio.Reader) uint8 {
+func DifficultyChoice(
+	writer *bufio.Writer,
+	reader *bufio.Reader) uint8 {
 
 	var answer uint8
 	var isFirst bool
@@ -82,7 +84,9 @@ func getDifficultyChoice() map[uint8]string {
 
 }
 
-func findLevel(answer *uint8, diff map[uint8]string) bool {
+func findLevel(
+	answer *uint8,
+	diff map[uint8]string) bool {
 
 	for key := range diff {
 

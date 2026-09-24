@@ -1,6 +1,8 @@
 package game
 
-func ScoreCounter(score *int64, decline *bool) {
+func ScoreCounter(
+	score *int64,
+	decline *bool) {
 
 	if !*decline {
 		*score += 10

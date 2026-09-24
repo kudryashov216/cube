@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"cube/internal/initialization"
 	"cube/internal/number"
+	"cube/internal/paint"
 	"math/rand"
 	"strconv"
 	"sync"
@@ -22,16 +23,20 @@ func StartGame(wg *sync.WaitGroup,
 	go number.InputNewNumber(enteredNumber, reader, writer, wg)
 	wg.Wait()
 
-	if number_, _ := strconv.Atoi(string(rune(*enteredNumber))); number_ > 6 || number_ <= 0 {
+	number_, _ := strconv.Atoi(string(rune(*enteredNumber)))
+
+	if number_ > 6 || number_ <= 0 {
 		number.IncorrectNumberEntered(writer)
 		return
 	}
 
 	initialization.Initialization(writer)
 
-	randomNumber := number.GetRandomNumber(randomaizer)
+	randomNumber := uint8(number.GetRandomNumber(randomaizer))
 
-	if string(rune(*enteredNumber)) == strconv.Itoa(randomNumber) {
+	paint.DrawDice(&randomNumber, writer)
+
+	if string(rune(*enteredNumber)) == strconv.Itoa(int(randomNumber)) {
 		writer.Write([]byte("You win!\n"))
 		writer.Flush()
 		writer.Reset(writer)
@@ -42,7 +47,7 @@ func StartGame(wg *sync.WaitGroup,
 	writer.Flush()
 	writer.Reset(writer)
 
-	writer.Write([]byte("The correct number: " + strconv.Itoa(randomNumber) + "\n"))
+	writer.Write([]byte("The correct number: " + strconv.Itoa(int(randomNumber)) + "\n"))
 	writer.Flush()
 	writer.Reset(writer)
 

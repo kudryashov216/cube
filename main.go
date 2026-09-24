@@ -79,7 +79,15 @@ func main() {
 
 		}
 
-		game.StartGame(&wg, &eneterednumber, randomaizer, writer, reader, &scoreCounter, &decline, &countThrows)
+		game.StartGame(
+			&wg,
+			&eneterednumber,
+			randomaizer,
+			writer,
+			reader,
+			&scoreCounter,
+			&decline,
+			&countThrows)
 
 	}
 
