@@ -1,4 +1,4 @@
-package game
+package results
 
 func ScoreCounter(
 	score *int64,

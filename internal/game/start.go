@@ -2,9 +2,9 @@ package game
 
 import (
 	"bufio"
-	results "cube/internal/Results"
 	"cube/internal/initialization"
 	"cube/internal/number"
+	"cube/internal/results"
 	"math/rand"
 	"strconv"
 	"sync"
