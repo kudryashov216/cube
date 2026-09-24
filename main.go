@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+/*test*/
+
 func main() {
 
 	var gameToStart bool
