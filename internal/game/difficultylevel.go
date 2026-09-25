@@ -2,6 +2,7 @@ package game
 
 import (
 	"bufio"
+	"cube/internal/output"
 	"strconv"
 )
 
@@ -18,12 +19,10 @@ func DifficultyChoice(
 
 		if !isFirst {
 
-			writer.Write([]byte("Choose the difficulty level:\n\t"))
+			output.Output("Choose the difficulty level:\n\t")
 
 			for key, value := range diff {
-				writer.Write([]byte(strconv.Itoa(int(key)) + "-" + value + "\n\t"))
-				writer.Flush()
-				writer.Reset(writer)
+				output.Output(strconv.Itoa(int(key)) + "-" + value + "\n\t")
 			}
 
 		}
@@ -35,9 +34,7 @@ func DifficultyChoice(
 		bytes_, err := reader.ReadBytes(0b00001010)
 
 		if err != nil {
-			writer.Write([]byte("Error: " + err.Error() + "\n\t"))
-			writer.Flush()
-			writer.Reset(writer)
+			output.Output("Error: " + err.Error() + "\n\t")
 			ExitInGame()
 		}
 
@@ -49,9 +46,7 @@ func DifficultyChoice(
 		number, err := strconv.Atoi(string(bytes_[0]))
 
 		if err != nil {
-			writer.Write([]byte("Error: " + err.Error() + "\n\t"))
-			writer.Flush()
-			writer.Reset(writer)
+			output.Output("Error: " + err.Error() + "\n\t")
 			ExitInGame()
 		}
 
@@ -61,9 +56,7 @@ func DifficultyChoice(
 			break
 		}
 
-		writer.Write([]byte("There is no such level.\n"))
-		writer.Flush()
-		writer.Reset(writer)
+		output.Output("There is no such level.\n")
 		isFirst = false
 
 	}

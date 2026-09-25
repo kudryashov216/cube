@@ -1,15 +1,13 @@
 package initialization
 
 import (
-	"bufio"
+	"cube/internal/output"
 	"time"
 )
 
-func Initialization(writer *bufio.Writer) {
+func Initialization() {
 
-	writer.Write([]byte("Wait, the die is being rolled...\n"))
-	writer.Flush()
-
+	output.Output("Wait, the die is being rolled...\n")
 	time.Sleep(time.Second * 2)
 
 }

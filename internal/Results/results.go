@@ -2,27 +2,21 @@ package results
 
 import (
 	"bufio"
+	"cube/internal/output"
 	"cube/internal/paint"
 	"strconv"
 )
 
 func Output(enteredNumber *byte, result *uint8, writer *bufio.Writer) {
 
-	paint.DrawDice(result, writer)
+	paint.DrawDice(result)
 
 	if string(rune(*enteredNumber)) == strconv.Itoa(int(*result)) {
-		writer.Write([]byte("You win!\n"))
-		writer.Flush()
-		writer.Reset(writer)
+		output.Output("You win!\n")
 		return
 	}
 
-	writer.Write([]byte("You lost!\n"))
-	writer.Flush()
-	writer.Reset(writer)
-
-	writer.Write([]byte("The correct number: " + strconv.Itoa(int(*result)) + "\n"))
-	writer.Flush()
-	writer.Reset(writer)
+	output.Output("You lost!\n")
+	output.Output("The correct number: " + strconv.Itoa(int(*result)) + "\n")
 
 }

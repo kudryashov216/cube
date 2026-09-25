@@ -2,6 +2,7 @@ package number
 
 import (
 	"bufio"
+	"cube/internal/output"
 	"math/rand"
 	"sync"
 )
@@ -29,9 +30,7 @@ func InputNewNumber(enterednumber *byte, reader *bufio.Reader, writer *bufio.Wri
 	for {
 
 		if !isFirst {
-			writer.Write([]byte("\nEnter a random number from 1 to 6: "))
-			writer.Flush()
-			writer.Reset(writer)
+			output.Output("\nEnter a random number from 1 to 6: ")
 		}
 
 		bytes_, _ := reader.ReadBytes(0b00001010)
@@ -42,7 +41,7 @@ func InputNewNumber(enterednumber *byte, reader *bufio.Reader, writer *bufio.Wri
 		}
 
 		if len(bytes_) > 3 {
-			IncorrectNumberEntered(writer)
+			IncorrectNumberEntered()
 			continue
 		}
 
@@ -54,10 +53,8 @@ func InputNewNumber(enterednumber *byte, reader *bufio.Reader, writer *bufio.Wri
 
 }
 
-func IncorrectNumberEntered(writer *bufio.Writer) {
+func IncorrectNumberEntered() {
 
-	writer.Write([]byte("\nYou entered the wrong value! Please try again.\n"))
-	writer.Flush()
-	writer.Reset(writer)
+	output.Output("\nYou entered the wrong value! Please try again.\n")
 
 }

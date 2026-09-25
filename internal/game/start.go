@@ -26,11 +26,11 @@ func StartGame(wg *sync.WaitGroup,
 	number_, _ := strconv.Atoi(string(rune(*enteredNumber)))
 
 	if number_ > 6 || number_ <= 0 {
-		number.IncorrectNumberEntered(writer)
+		number.IncorrectNumberEntered()
 		return
 	}
 
-	initialization.Initialization(writer)
+	initialization.Initialization()
 
 	randomNumber := uint8(number.GetRandomNumber(randomaizer))
 

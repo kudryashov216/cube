@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"cube/internal/game"
+	"cube/internal/output"
 	"math/rand"
 	"os"
 	"sync"
@@ -36,29 +37,20 @@ func main() {
 
 		if !gameToStart {
 
-			writer.Write([]byte("Start the game? -answers:\n\t-y\n\t-n\n"))
-			writer.Flush()
-			writer.Reset(writer)
+			output.Output("Start the game? -answers:\n\t-y\n\t-n\n")
 
 			response, _ := reader.ReadByte()
 
 			switch response {
 			case 'n':
-				writer.Write([]byte("\nYou exit to game!\n"))
-				writer.Flush()
-				writer.Reset(writer)
+				output.Output("\nYou exit to game!\n")
 				time.Sleep(time.Second * 1)
 				game.ExitInGame()
 			case 'y':
-				writer.Write([]byte("You have \"100\" points."))
-				writer.Write([]byte("\nGame beginning!\n"))
-				writer.Flush()
-				writer.Reset(writer)
+				output.Output("\nYou have \"100\" points.\n\nGame beginning!\n")
 				gameToStart = true
 			default:
-				writer.Write([]byte("\nYou put incorrect response\n"))
-				writer.Flush()
-				writer.Reset(writer)
+				output.Output("\nYou put incorrect response\n")
 				game.ExitInGame()
 			}
 
@@ -73,9 +65,7 @@ func main() {
 				countThrows = NUMBER_THROWS_HIGH
 			}
 
-			writer.Write([]byte("settings succed!"))
-			writer.Flush()
-			writer.Reset(writer)
+			output.Output("settings succed!")
 
 		}
 
