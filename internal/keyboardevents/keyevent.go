@@ -1,7 +1,7 @@
-package main
+package keyboardevents
 
 import (
-	"bufio"
+	"context"
 	"cube/internal/output"
 	"syscall"
 	"unsafe"
@@ -36,7 +36,7 @@ const (
 	keyEvent_      = 0x0001
 )
 
-func GetKeyEvent(ch chan<- uint16, writer *bufio.Writer) {
+func GetKeyEvent(ctx context.Context, ch chan<- uint16) {
 
 	h, err := getStdHandle(stdInputHandle)
 
@@ -57,9 +57,13 @@ func GetKeyEvent(ch chan<- uint16, writer *bufio.Writer) {
 
 		if rec.EventType == keyEvent_ && rec.Event.KeyDown == 1 {
 
-			vk := rec.Event.VirtualKeyCode
-
-			ch <- vk
+			select {
+			case <-ctx.Done():
+				return
+			default:
+				vk := rec.Event.VirtualKeyCode
+				ch <- vk
+			}
 
 		}
 	}

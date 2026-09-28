@@ -2,7 +2,10 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"cube/internal/game"
+	"cube/internal/keyboardevents"
+	"cube/internal/menu"
 	"cube/internal/output"
 	"math/rand"
 	"os"
@@ -16,8 +19,10 @@ func main() {
 		gameToStart    bool
 		decline        bool
 		eneterednumber byte
-		scoreCounter   int64 = 100
 		countThrows    uint8
+		currentCommand uint8       = 0
+		scoreCounter   int64       = 100
+		keyboardEvent  chan uint16 = make(chan uint16)
 		wg             sync.WaitGroup
 	)
 
@@ -33,25 +38,32 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	writer := bufio.NewWriter(os.Stdout)
 
+	ctx, cancel := context.WithCancel(context.Background())
+
 	for {
 
 		if !gameToStart {
 
-			output.Output("Start the game? -answers:\n\t-y\n\t-n\n")
+			menu := menu.GetMenu()
 
-			response, _ := reader.ReadByte()
+			menu.PaintInitialMenu(currentCommand)
 
-			switch response {
-			case 'n':
-				output.Output("\nYou exit to game!\n")
-				time.Sleep(time.Second * 1)
-				game.ExitInGame()
-			case 'y':
-				output.Output("\nYou have \"100\" points.\n\nGame beginning!\n")
-				gameToStart = true
-			default:
-				output.Output("\nYou put incorrect response\n")
-				game.ExitInGame()
+			go keyboardevents.GetKeyEvent(ctx, keyboardEvent)
+
+			for command := range keyboardEvent {
+
+				switch command {
+
+				case 38:
+					menu.UpdateCurrentCommand(&currentCommand)
+				case 40:
+					menu.UpdateCurrentCommand(&currentCommand)
+				case 13:
+					menu.Execute(cancel, &gameToStart, &keyboardEvent, currentCommand)
+				}
+
+				menu.PaintInitialMenu(currentCommand)
+
 			}
 
 			result := game.DifficultyChoice(writer, reader)
