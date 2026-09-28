@@ -7,7 +7,6 @@ import (
 	"cube/internal/game"
 	"cube/internal/keyboardevents"
 	"cube/internal/menu"
-	"cube/internal/output"
 	"math/rand"
 	"os"
 	"sync"
@@ -25,12 +24,6 @@ func main() {
 		scoreCounter   int64       = 100
 		keyboardEvent  chan uint16 = make(chan uint16)
 		wg             sync.WaitGroup
-	)
-
-	const (
-		NUMBER_THROWS_EASY   uint8 = 6
-		NUMBER_THROWS_MIDDLE uint8 = 3
-		NUMBER_THROWS_HIGH   uint8 = 1
 	)
 
 	randSource := rand.NewSource(time.Now().Unix())
@@ -68,20 +61,7 @@ func main() {
 			}
 
 			cmd.GetConsole().Clear()
-
-			result := game.DifficultyChoice(writer, reader)
-
-			switch result {
-			case 0:
-				countThrows = NUMBER_THROWS_EASY
-			case 1:
-				countThrows = NUMBER_THROWS_MIDDLE
-			case 2:
-				countThrows = NUMBER_THROWS_HIGH
-			}
-
-			output.Output("settings succed!")
-
+			game.DifficultyChoice(&countThrows, writer, reader)
 			cmd.GetConsole().Clear()
 
 		}
