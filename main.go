@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"context"
+	"cube/cmd"
 	"cube/internal/game"
 	"cube/internal/keyboardevents"
 	"cube/internal/menu"
@@ -66,6 +67,8 @@ func main() {
 
 			}
 
+			cmd.GetConsole().Clear()
+
 			result := game.DifficultyChoice(writer, reader)
 
 			switch result {
@@ -78,6 +81,8 @@ func main() {
 			}
 
 			output.Output("settings succed!")
+
+			cmd.GetConsole().Clear()
 
 		}
 

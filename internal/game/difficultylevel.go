@@ -27,9 +27,7 @@ func DifficultyChoice(
 
 		}
 
-		writer.WriteByte(0b00001101)
-		writer.Flush()
-		writer.Reset(writer)
+		output.Output("\r")
 
 		bytes_, err := reader.ReadBytes(0b00001010)
 

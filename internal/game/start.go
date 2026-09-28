@@ -2,6 +2,7 @@ package game
 
 import (
 	"bufio"
+	"cube/cmd"
 	"cube/internal/initialization"
 	"cube/internal/number"
 	"cube/internal/results"
@@ -33,6 +34,8 @@ func StartGame(wg *sync.WaitGroup,
 	initialization.Initialization()
 
 	randomNumber := uint8(number.GetRandomNumber(randomaizer))
+
+	cmd.GetConsole().Clear()
 
 	results.Output(enteredNumber, &randomNumber, writer)
 
